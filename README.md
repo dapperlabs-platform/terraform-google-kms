@@ -10,7 +10,7 @@ When using an existing keyring be mindful about applying IAM bindings, as all bi
 
 ```hcl
 module "kms" {
-  source         = "../modules/kms"
+  source         = "github.com/dapperlabs-platform/terraform-google-kms?ref=tag"
   project_id     = "my-project"
   iam    = {
     "roles/owner" = ["user:user1@example.com"]
