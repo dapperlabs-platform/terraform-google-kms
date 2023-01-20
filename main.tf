@@ -58,12 +58,13 @@ resource "google_kms_key_ring_iam_binding" "default" {
 }
 
 resource "google_kms_crypto_key" "default" {
-  for_each        = var.keys
-  key_ring        = local.keyring.id
-  name            = each.key
-  rotation_period = try(each.value.rotation_period, null)
-  labels          = try(each.value.labels, null)
-  purpose         = try(local.key_purpose[each.key].purpose, null)
+  for_each                   = var.keys
+  key_ring                   = local.keyring.id
+  name                       = each.key
+  rotation_period            = try(each.value.rotation_period, null)
+  labels                     = try(each.value.labels, null)
+  destroy_scheduled_duration = try(each.value.destroy_scheduled_duration, null)
+  purpose                    = try(local.key_purpose[each.key].purpose, null)
   dynamic "version_template" {
     for_each = local.key_purpose[each.key].version_template == null ? [] : [""]
     content {
@@ -71,9 +72,9 @@ resource "google_kms_crypto_key" "default" {
       protection_level = local.key_purpose[each.key].version_template.protection_level
     }
   }
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = try(each.value.prevent_destroy, false)
+  }
 }
 
 resource "google_kms_crypto_key_iam_binding" "default" {

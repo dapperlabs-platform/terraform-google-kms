@@ -72,8 +72,10 @@ variable "keyring_create" {
 variable "keys" {
   description = "Key names and base attributes. Set attributes to null if not needed."
   type = map(object({
-    rotation_period = string
-    labels          = map(string)
+    rotation_period            = string
+    labels                     = map(string)
+    prevent_destroy            = bool
+    destroy_scheduled_duration = string
   }))
   default = {}
 }
