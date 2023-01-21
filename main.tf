@@ -73,7 +73,7 @@ resource "google_kms_crypto_key" "default" {
     }
   }
   lifecycle {
-    prevent_destroy = try(each.value.prevent_destroy, false)
+    prevent_destroy = each.value.prevent_destroy || false
   }
 }
 
