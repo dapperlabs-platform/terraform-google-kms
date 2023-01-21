@@ -74,7 +74,6 @@ variable "keys" {
   type = map(object({
     rotation_period            = string
     labels                     = map(string)
-    prevent_destroy            = bool
     destroy_scheduled_duration = string
   }))
   default = {}
