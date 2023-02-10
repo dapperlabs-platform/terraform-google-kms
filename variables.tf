@@ -69,6 +69,7 @@ variable "keyring_create" {
   default     = true
 }
 
+# The maximum value for destroy_scheduled_duration is 120 days (set to "120d")
 variable "keys" {
   description = "Key names and base attributes. Set attributes to null if not needed."
   type = map(object({

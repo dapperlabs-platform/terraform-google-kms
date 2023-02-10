@@ -72,9 +72,10 @@ resource "google_kms_crypto_key" "default" {
       protection_level = local.key_purpose[each.key].version_template.protection_level
     }
   }
-  #  lifecycle {
-  #    prevent_destroy = each.value.prevent_destroy || false
-  #  }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "google_kms_crypto_key_iam_binding" "default" {
